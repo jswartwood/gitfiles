@@ -1,7 +1,7 @@
 var util = require("util"),
 		stream = require("stream");
 
-var statusMatch = /^([ADMR]) (.+)$/;
+var actionMatcher = /^([ADMR])\s+(.+?)$/;
 
 function StatusStream( opts ) {
 	if (!(this instanceof StatusStream))
@@ -15,20 +15,29 @@ function StatusStream( opts ) {
 		M: false,
 		R: false,
 	};
+
+	this.newline = "\n";
 }
 
 //StatusStream.prototype = Object.create(stream.Transform.prototype, { constructor: { value: stream.Transform }});
 util.inherits(StatusStream, stream.Transform);
 
 StatusStream.prototype._transform = function( chunk, encoding, done ) {
-	var statusMatched = chunk.toString().match(statusMatch);
-
-	if (statusMatched && !this.excludeStatus[statusMatched[1]]) {
-		this.push(statusMatched[2]);
+	var lines = chunk.toString().split(/(?:\n)|(?:\r\n)|(?:\r)/);
+	
+	for (var i = 0, j = lines.length; i < j; i++) {
+		pushFile.call(this, lines[i]);
 	}
-
+	
 	done(null);
 };
+
+function pushFile( line ) {
+	var fileAction = line.match(actionMatcher);
+	if (fileAction && !this.excludeStatus[fileAction[1]]) {
+		this.push(fileAction[2] + this.newline);
+	}
+}
 
 module.exports = StatusStream;
 

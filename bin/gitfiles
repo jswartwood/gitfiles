@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+process.stdin.pipe(require("../index")()).pipe(process.stdout);
+
+// require("child_process").exec("git log --oneline --name-status").stdout.pipe(new require("../index")()).pipe(process.stdout);

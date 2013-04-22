@@ -1,7 +1,7 @@
 var util = require("util"),
 		stream = require("stream");
 
-var actionMatcher = /^([ADMR])\s+(.+?)$/;
+var statusMatcher = /^([ADMR])\s+(.+?)$/;
 
 function StatusStream( opts ) {
 	if (!(this instanceof StatusStream))
@@ -33,9 +33,9 @@ StatusStream.prototype._transform = function( chunk, encoding, done ) {
 };
 
 function pushFile( line ) {
-	var fileAction = line.match(actionMatcher);
-	if (fileAction && !this.excludeStatus[fileAction[1]]) {
-		this.push(fileAction[2] + this.newline);
+	var fileStatus = line.match(statusMatcher);
+	if (fileStatus && !this.excludeStatus[fileStatus[1]]) {
+		this.push(fileStatus[2] + this.newline);
 	}
 }
 

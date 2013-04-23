@@ -58,7 +58,7 @@ function pushFile( line ) {
 	
 	// Give up if results should be unique
 	// and this file has been sent already.
-	if (this.unique && this._unique[file) return;
+	if (this.unique && this._unique[file]) return;
 	this._unique[file] = true;
 	// Give up if status should be excluded.
 	if (this.excludeStatus[status]) return;

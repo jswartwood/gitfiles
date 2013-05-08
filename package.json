@@ -1,0 +1,16 @@
+{
+  "name": "gitfiles",
+  "version": "0.1.0",
+  "description": "Extract files from a git log (using --name-status.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha ./test"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "repository": "git@github.com:jswartwood/gitfiles.git",
+  "author": "Jacob Swartwood",
+  "license": "MIT"
+}
